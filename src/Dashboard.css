@@ -1,0 +1,171 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* Full background igloo di seluruh body */
+  background-image: url('/igloo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Tambah overlay gelap supaya teks terbaca */
+  background-color: rgba(0, 0, 0, 0.4);
+  background-blend-mode: darken;
+
+  color: #f0f4f8; /* teks terang */
+  min-height: 100vh;
+}
+
+.dashboard-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px 20px;
+
+  /* Jangan kasih background image di sini */
+  /* Hilangkan background overlay dari container */
+
+  border-radius: 12px;
+  /* Buang box-shadow supaya transparan */
+}
+
+/* ===== Header Styling ===== */
+.dashboard-header {
+  background: rgba(0, 68, 102, 0.7); /* semi-transparent navy */
+  padding: 20px 30px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 68, 102, 0.8);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #f0f4f8;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.7),
+    0 0 15px rgba(0, 68, 102, 0.9);
+}
+
+.dashboard-header nav ul {
+  margin-top: 15px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.dashboard-header nav ul li a {
+  color: #a6d8ff;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.1rem;
+  text-shadow: 0 0 6px rgba(0, 68, 102, 0.8);
+  transition: color 0.3s ease;
+}
+
+.dashboard-header nav ul li a:hover {
+  color: #fff;
+  text-shadow: 0 0 12px #a6d8ff;
+}
+
+/* ===== Main Title (jika masih dipakai) ===== */
+.dashboard-title {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #f0f4f8;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+}
+
+/* Kotak setiap card dengan border dan transparan */
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.7);
+
+  /* Tambahan untuk efek menonjol */
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+
+.card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: #f0f4f8;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+}
+
+.card p {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+
+  /* Warna default putih terang dengan glow */
+  color: #fff;
+  text-shadow:
+    0 0 8px rgba(0, 0, 0, 0.8),
+    0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+/* Warna teks dengan glow sesuai kategori */
+.temperature p {
+  color: #ff4d4d; /* merah terang */
+  /* text-shadow:
+    0 0 10px #ff4d4d,
+    0 0 20px #ff9999; */
+}
+
+.heat-status p {
+  color: #ff9f43; /* oranye */
+  /* text-shadow:
+    0 0 10px #ff9f43,
+    0 0 20px #ffc966; */
+}
+
+.humidity p {
+  color: #4dabf7; /* biru */
+  /* text-shadow:
+    0 0 10px #4dabf7,
+    0 0 20px #a6d8ff; */
+}
+
+.ir-status p {
+  color: #66bb6a; /* hijau */
+  /* text-shadow:
+    0 0 10px #66bb6a,
+    0 0 20px #a6d8a8; */
+}
+
+/* ===== Footer Styling ===== */
+.dashboard-footer {
+  background: rgba(0, 68, 102, 0.7);
+  padding: 15px 20px;
+  margin-top: 50px;
+  border-radius: 12px;
+  text-align: center;
+  color: #cce7ff;
+  font-weight: 500;
+  font-size: 1rem;
+  text-shadow:
+    0 0 8px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 12px rgba(0, 68, 102, 0.8);
+}
