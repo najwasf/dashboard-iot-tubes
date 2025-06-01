@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { ref, onValue } from "firebase/database";
+import { useNavigate } from "react-router-dom"; // 🔹 Tambahkan ini
 import database from "./firebase";
-import "./Dashboard.css";  // file CSS eksternal
+import "./Dashboard.css"; // CSS eksternal
 
 function Dashboard() {
   const [temperature, setTemperature] = useState(null);
   const [heatStatus, setHeatStatus] = useState(null);
   const [humidity, setHumidity] = useState(null);
   const [irStatus, setIrStatus] = useState(null);
-
   const [modalInfo, setModalInfo] = useState({ show: false, title: "", description: "" });
+
+  const navigate = useNavigate(); // 🔹 Inisialisasi navigate
 
   useEffect(() => {
     const sensorRef = ref(database, "Sensors");
@@ -33,11 +35,22 @@ function Dashboard() {
     setModalInfo({ show: false, title: "", description: "" });
   };
 
+  const handleLogout = () => {
+    // Tambahkan logika logout jika pakai auth, misal signOut
+    alert("Logged out!");
+    navigate("/login"); // 🔹 Arahkan ke halaman login
+  };
+
   return (
     <div className="dashboard-container">
       {/* Header */}
       <header className="dashboard-header">
-        <h1>Antartica Bunker Control</h1>
+        <div className="header-content" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h1>Antartica Bunker Control</h1>
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </header>
 
       {/* Main Content */}
@@ -60,10 +73,7 @@ function Dashboard() {
           id="heat-status"
           className="card heat-status"
           onClick={() =>
-            openModal(
-              "Heat Status",
-              `Heat index is ${heatStatus} °C.`
-            )
+            openModal("Heat Status", `Heat index is ${heatStatus} °C.`)
           }
         >
           <h2>Heat Status</h2>
@@ -74,10 +84,7 @@ function Dashboard() {
           id="humidity"
           className="card humidity"
           onClick={() =>
-            openModal(
-              "Humidity",
-              `Humidity level is ${humidity}%. `
-            )
+            openModal("Humidity", `Humidity level is ${humidity}%. `)
           }
         >
           <h2>Humidity</h2>
@@ -88,10 +95,7 @@ function Dashboard() {
           id="ir-status"
           className="card ir-status"
           onClick={() =>
-            openModal(
-              "Infrared State",
-              `Infrared sensor status: ${irStatus}. `
-            )
+            openModal("Infrared State", `Infrared sensor status: ${irStatus}. `)
           }
         >
           <h2>Infrared State</h2>

@@ -21,11 +21,7 @@ body {
   margin: 40px auto;
   padding: 40px 20px;
 
-  /* Jangan kasih background image di sini */
-  /* Hilangkan background overlay dari container */
-
   border-radius: 12px;
-  /* Buang box-shadow supaya transparan */
 }
 
 /* ===== Header Styling ===== */
@@ -100,12 +96,9 @@ body {
 .card:hover {
   background: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.7);
-
-  /* Tambahan untuk efek menonjol */
   transform: translateY(-10px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
-
 
 .card h2 {
   font-size: 1.4rem;
@@ -118,8 +111,6 @@ body {
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0;
-
-  /* Warna default putih terang dengan glow */
   color: #fff;
   text-shadow:
     0 0 8px rgba(0, 0, 0, 0.8),
@@ -128,31 +119,19 @@ body {
 
 /* Warna teks dengan glow sesuai kategori */
 .temperature p {
-  color: #ff4d4d; /* merah terang */
-  /* text-shadow:
-    0 0 10px #ff4d4d,
-    0 0 20px #ff9999; */
+  color: #ff4d4d;
 }
 
 .heat-status p {
-  color: #ff9f43; /* oranye */
-  /* text-shadow:
-    0 0 10px #ff9f43,
-    0 0 20px #ffc966; */
+  color: #ff9f43;
 }
 
 .humidity p {
-  color: #4dabf7; /* biru */
-  /* text-shadow:
-    0 0 10px #4dabf7,
-    0 0 20px #a6d8ff; */
+  color: #4dabf7;
 }
 
 .ir-status p {
-  color: #66bb6a; /* hijau */
-  /* text-shadow:
-    0 0 10px #66bb6a,
-    0 0 20px #a6d8a8; */
+  color: #66bb6a;
 }
 
 /* ===== Footer Styling ===== */
@@ -165,10 +144,11 @@ body {
   color: #cce7ff;
   font-weight: 500;
   font-size: 1rem;
-  text-shadow:
-    0 0 8px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
   box-shadow: 0 0 12px rgba(0, 68, 102, 0.8);
 }
+
+/* ===== Modal Styling ===== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -191,6 +171,7 @@ body {
   color: #333;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
   animation: fadeIn 0.3s ease;
+  text-align: center;
 }
 
 .modal-content h2 {
@@ -201,7 +182,7 @@ body {
 
 .modal-content p {
   font-size: 1rem;
-  margin: 15px 0;
+  margin: 20px 0;
 }
 
 .modal-content button {
@@ -227,4 +208,23 @@ body {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* ===== Logout Button Styling ===== */
+.logout-button {
+  background-color: #cc3300;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #a60000;
+  transform: translateY(-2px);
 }
