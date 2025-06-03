@@ -4,12 +4,37 @@ import { useNavigate } from "react-router-dom";
 import database from "./firebase";
 import "./Dashboard.css";
 
+// Import Recharts untuk grafik
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
 function Dashboard() {
+  // State data sensor terkini
   const [temperature, setTemperature] = useState(null);
   const [heatStatus, setHeatStatus] = useState(null);
   const [humidity, setHumidity] = useState(null);
   const [irStatus, setIrStatus] = useState(null);
-  const [modalInfo, setModalInfo] = useState({ show: false, title: "", description: "" });
+
+  // State histori data untuk grafik (array objek {time, value})
+  const [tempHistory, setTempHistory] = useState([]);
+  const [heatHistory, setHeatHistory] = useState([]);
+  const [humidityHistory, setHumidityHistory] = useState([]);
+  const [irHistory, setIrHistory] = useState([]);
+
+  // State modal
+  const [modalInfo, setModalInfo] = useState({
+    show: false,
+    title: "",
+    description: "",
+    chartData: [],
+    color: "#ffffff",
+  });
 
   const navigate = useNavigate();
 
@@ -18,21 +43,51 @@ function Dashboard() {
 
     const unsubscribe = onValue(sensorRef, (snapshot) => {
       const data = snapshot.val();
+
+      // Update nilai sensor sekarang
       setTemperature(data?.temperature);
       setHeatStatus(data?.heat_status);
       setHumidity(data?.humidity);
       setIrStatus(data?.ir_status);
+
+      const now = new Date().toLocaleTimeString();
+
+      // Update histori data, simpan max 20 poin terakhir
+      if (data?.temperature !== undefined) {
+        setTempHistory((prev) => [
+          ...prev.slice(-19),
+          { time: now, value: data.temperature },
+        ]);
+      }
+      if (data?.heat_status !== undefined) {
+        setHeatHistory((prev) => [
+          ...prev.slice(-19),
+          { time: now, value: data.heat_status },
+        ]);
+      }
+      if (data?.humidity !== undefined) {
+        setHumidityHistory((prev) => [
+          ...prev.slice(-19),
+          { time: now, value: data.humidity },
+        ]);
+      }
+      if (data?.ir_status !== undefined) {
+        // Untuk IR status yang kemungkinan string, kita bisa simpan 1 untuk ON, 0 untuk OFF
+        const irValue = data.ir_status === "ON" || data.ir_status === true ? 1 : 0;
+        setIrHistory((prev) => [...prev.slice(-19), { time: now, value: irValue }]);
+      }
     });
 
     return () => unsubscribe();
   }, []);
 
-  const openModal = (title, description) => {
-    setModalInfo({ show: true, title, description });
+  // Fungsi buka modal + kirim data grafik dan warna garis
+  const openModal = (title, description, chartData = [], color = "#ffffff") => {
+    setModalInfo({ show: true, title, description, chartData, color });
   };
 
   const closeModal = () => {
-    setModalInfo({ show: false, title: "", description: "" });
+    setModalInfo({ show: false, title: "", description: "", chartData: [], color: "#ffffff" });
   };
 
   const handleLogout = () => {
@@ -55,7 +110,12 @@ function Dashboard() {
           id="temperature"
           className="card temperature"
           onClick={() =>
-            openModal("Temperature", `Current temperature is ${temperature} °C.`)
+            openModal(
+              "Temperature",
+              `Current temperature is ${temperature} °C.`,
+              tempHistory,
+              "#ff7300"
+            )
           }
         >
           <h2>Temperature</h2>
@@ -66,7 +126,12 @@ function Dashboard() {
           id="heat-status"
           className="card heat-status"
           onClick={() =>
-            openModal("Heat Status", `Heat index is ${heatStatus} °C.`)
+            openModal(
+              "Heat Status",
+              `Heat index is ${heatStatus} °C.`,
+              heatHistory,
+              "#ff0000"
+            )
           }
         >
           <h2>Heat Status</h2>
@@ -77,7 +142,12 @@ function Dashboard() {
           id="humidity"
           className="card humidity"
           onClick={() =>
-            openModal("Humidity", `Humidity level is ${humidity}%.`)
+            openModal(
+              "Humidity",
+              `Humidity level is ${humidity}%.`,
+              humidityHistory,
+              "#0077ff"
+            )
           }
         >
           <h2>Humidity</h2>
@@ -88,7 +158,12 @@ function Dashboard() {
           id="ir-status"
           className="card ir-status"
           onClick={() =>
-            openModal("Infrared State", `Infrared sensor status: ${irStatus}.`)
+            openModal(
+              "Infrared State",
+              `Infrared sensor status: ${irStatus}.`,
+              irHistory,
+              "#00cc00"
+            )
           }
         >
           <h2>Infrared State</h2>
@@ -96,7 +171,7 @@ function Dashboard() {
         </div>
       </main>
 
-      {/* 🔻 Logout Button Below Cards */}
+      {/* Logout Button */}
       <div style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
         <button className="logout-button" onClick={handleLogout}>
           Logout
@@ -114,7 +189,27 @@ function Dashboard() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>{modalInfo.title}</h2>
             <p>{modalInfo.description}</p>
-            <button onClick={closeModal}>Close</button>
+
+            <div style={{ width: "100%", height: 250, marginTop: 20 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={modalInfo.chartData}>
+                  <XAxis dataKey="time" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke={modalInfo.color}
+                    strokeWidth={2}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            <button onClick={closeModal} style={{ marginTop: 20 }}>
+              Close
+            </button>
           </div>
         </div>
       )}
