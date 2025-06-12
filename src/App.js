@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./Dashboard";
-import Login from "./Login";
+import Login from "./login";
 
 // Komponen route privat
 function PrivateRoute({ children }) {

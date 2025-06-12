@@ -1,32 +1,31 @@
+/* ===== Body Background ===== */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-  /* Full background igloo di seluruh body */
   background-image: url('/igloo.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  /* Tambah overlay gelap supaya teks terbaca */
   background-color: rgba(0, 0, 0, 0.4);
   background-blend-mode: darken;
 
-  color: #f0f4f8; /* teks terang */
+  color: #f0f4f8;
   min-height: 100vh;
 }
 
+/* ===== Container ===== */
 .dashboard-container {
   max-width: 900px;
   margin: 40px auto;
   padding: 40px 20px;
-
   border-radius: 12px;
 }
 
 /* ===== Header Styling ===== */
 .dashboard-header {
-  background: rgba(0, 68, 102, 0.7); /* semi-transparent navy */
+  background: rgba(0, 68, 102, 0.7);
   padding: 20px 30px;
   border-radius: 12px;
   margin-bottom: 40px;
@@ -44,46 +43,14 @@ body {
     0 0 15px rgba(0, 68, 102, 0.9);
 }
 
-.dashboard-header nav ul {
-  margin-top: 15px;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-}
-
-.dashboard-header nav ul li a {
-  color: #a6d8ff;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 1.1rem;
-  text-shadow: 0 0 6px rgba(0, 68, 102, 0.8);
-  transition: color 0.3s ease;
-}
-
-.dashboard-header nav ul li a:hover {
-  color: #fff;
-  text-shadow: 0 0 12px #a6d8ff;
-}
-
-/* ===== Main Title (jika masih dipakai) ===== */
-.dashboard-title {
-  text-align: center;
-  font-size: 2.8rem;
-  font-weight: 700;
-  margin-bottom: 50px;
-  color: #f0f4f8;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-}
-
+/* ===== Cards Grid ===== */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 40px;
 }
 
-/* Kotak setiap card dengan border dan transparan */
+/* ===== Individual Cards ===== */
 .card {
   background: rgba(255, 255, 255, 0.15);
   border: 2px solid rgba(255, 255, 255, 0.4);
@@ -117,7 +84,7 @@ body {
     0 0 15px rgba(255, 255, 255, 0.6);
 }
 
-/* Warna teks dengan glow sesuai kategori */
+/* ===== Custom Color per Card ===== */
 .temperature p {
   color: #ff4d4d;
 }
@@ -134,7 +101,7 @@ body {
   color: #66bb6a;
 }
 
-/* ===== Footer Styling ===== */
+/* ===== Footer ===== */
 .dashboard-footer {
   background: rgba(0, 68, 102, 0.7);
   padding: 15px 20px;
@@ -148,7 +115,7 @@ body {
   box-shadow: 0 0 12px rgba(0, 68, 102, 0.8);
 }
 
-/* ===== Modal Styling ===== */
+/* ===== Modal ===== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -210,7 +177,7 @@ body {
   }
 }
 
-/* ===== Logout Button Styling ===== */
+/* ===== Logout Button ===== */
 .logout-button {
   background-color: #cc3300;
   color: white;
@@ -228,3 +195,66 @@ body {
   background-color: #a60000;
   transform: translateY(-2px);
 }
+
+/* ===== Switch (Lockdown Toggle) ===== */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+.lockdown-button {
+  background-color: #00cc66;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.lockdown-button:hover {
+  background-color: #00994d;
+  transform: translateY(-2px);
+}
+
