@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ref, onValue, set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import { database } from "./firebase";
+import { database } from "./firebase"; //import konfig firebase
 
 import "./Dashboard.css";
 import {
@@ -13,7 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Dashboard() {
+function Dashboard() { // fs utama komp dashboard
   const navigate = useNavigate();
   const prevIrStatus = useRef(0);
 
@@ -144,7 +144,7 @@ function Dashboard() {
     <div className="dashboard-container">
       <header className="dashboard-header">
         <div className="header-content" style={{ textAlign: "center" }}>
-          <h1>Antartica Bunker Control</h1>
+          <h1>Sistem Monitoring Suhu-Kelembapan dan Kontrol Arah Servo Berbasis MQTT-HTTP</h1>
         </div>
       </header>
 
@@ -180,7 +180,7 @@ function Dashboard() {
             const desc = histories.gateStatus.length
               ? `Gate status log:\n${histories.gateStatus.map((e) => `${e.time} - ${e.value}`).join("\n")}`
               : "No gate status logs yet.";
-            openModal("Gate Status Log", desc, [], "#9900cc");
+            openModal("Gate Status Log", desc, [], "#000000");
           }}
         >
           <h2>Gate Status</h2>
