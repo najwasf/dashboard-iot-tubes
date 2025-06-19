@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ref, onValue, set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import { database } from "./firebase"; //import konfig firebase
+import { database } from "./firebase";
 
 import "./Dashboard.css";
 import {
@@ -13,11 +13,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Dashboard() { // fs utama komp dashboard
+function Dashboard() {
   const navigate = useNavigate();
   const prevIrStatus = useRef(0);
 
-  // States
   const [sensorData, setSensorData] = useState({
     temperature: null,
     heatStatus: null,
@@ -45,7 +44,7 @@ function Dashboard() { // fs utama komp dashboard
 
   const now = () => new Date().toLocaleTimeString();
 
-  // Sensor listener
+  // Listener sensor
   useEffect(() => {
     const sensorRef = ref(database, "Sensors");
     const unsubscribe = onValue(sensorRef, (snapshot) => {
@@ -94,7 +93,7 @@ function Dashboard() { // fs utama komp dashboard
     return () => unsubscribe();
   }, []);
 
-  // Lockdown status listener
+  // Listener lockdown
   useEffect(() => {
     const lockdownRef = ref(database, "Control/Lockdown");
     const unsubscribe = onValue(lockdownRef, (snapshot) => {
@@ -123,7 +122,19 @@ function Dashboard() { // fs utama komp dashboard
       .catch((err) => console.error("Failed to update lockdown state:", err));
   };
 
-  // Card Rendering Helper
+  const handleServoCommand = (command) => {
+    set(ref(database, "Control/Servo"), command)
+      .then(() => console.log(`Servo command set to ${command}`))
+      .catch((err) => console.error("Failed to update servo command:", err));
+  };
+
+  // ✅ Reset servo dengan nilai kosong ("")
+  const handleServoReset = () => {
+    set(ref(database, "Control/Servo"), "")
+      .then(() => console.log("Servo command has been reset"))
+      .catch((err) => console.error("Failed to reset servo command:", err));
+  };
+
   const renderCard = (id, label, value, historyKey, color, unit = "", descriptionFn) => (
     <div
       id={id}
@@ -144,7 +155,7 @@ function Dashboard() { // fs utama komp dashboard
     <div className="dashboard-container">
       <header className="dashboard-header">
         <div className="header-content" style={{ textAlign: "center" }}>
-          <h1>Sistem Monitoring Suhu-Kelembapan dan Kontrol Arah Servo Berbasis MQTT-HTTP</h1>
+          <h1>Sistem Monitoring Suhu-Kelembapan dan Kontrol Arah Servo Berbasis MQTT-HTTP</h1>
         </div>
       </header>
 
@@ -212,6 +223,19 @@ function Dashboard() { // fs utama komp dashboard
         </button>
       </div>
 
+      {/* 🔘 Tombol Servo Control */}
+      <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: 20 }}>
+        <button onClick={() => handleServoCommand("OPEN")} className="servo-button open">
+          Buka Servo
+        </button>
+        <button onClick={() => handleServoCommand("CLOSE")} className="servo-button close">
+          Tutup Servo
+        </button>
+        <button onClick={handleServoReset} className="servo-button reset">
+          Reset Servo
+        </button>
+      </div>
+
       <footer className="dashboard-footer">
         <p>© 2025 Rafina Industries. All rights reserved.</p>
       </footer>
@@ -221,17 +245,15 @@ function Dashboard() { // fs utama komp dashboard
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>{modalInfo.title}</h2>
             {modalInfo.chartData.length === 0 ? (
-              <pre
-                style={{
-                  whiteSpace: "pre-wrap",
-                  maxHeight: "200px",
-                  overflowY: "auto",
-                  backgroundColor: "#f0f0f0",
-                  padding: "10px",
-                  borderRadius: "5px",
-                  marginTop: "20px",
-                }}
-              >
+              <pre style={{
+                whiteSpace: "pre-wrap",
+                maxHeight: "200px",
+                overflowY: "auto",
+                backgroundColor: "#f0f0f0",
+                padding: "10px",
+                borderRadius: "5px",
+                marginTop: "20px",
+              }}>
                 {modalInfo.description}
               </pre>
             ) : (

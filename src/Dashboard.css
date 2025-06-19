@@ -4,7 +4,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: 
     linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-    url('/rumah.jpg') center/cover no-repeat;
+    url('/rs.jpg') center/cover no-repeat;
   color: #f0f4f8;
   min-height: 100vh;
 }
@@ -170,10 +170,39 @@ body {
 .lockdown-button:hover {
   background: #00994d;
   transform: translateY(-2px);
+}/* ===== Servo Buttons ===== */
+.servo-button {
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
+.servo-button.open {
+  background: #0077ff;
+}
 
+.servo-button.open:hover {
+  background: #005fcc;
+  transform: translateY(-2px);
+}
 
-/* ===== Text Box ===== */
+.servo-button.close {
+  background: #555;
+}
 
+.servo-button.close:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
+.servo-button.reset {
+  background: #cc0000;
+  border: 2px solid #ffcccc;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
 
